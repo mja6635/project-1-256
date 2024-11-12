@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <base href="/">
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>Site Analyzer</title>
+  <style>
+    :root {
+      --global-hex-color: green;
+    }
+    html, body {
+      margin: 0;
+      padding: 0;
+    }
+    #demo {
+      margin: var(--ddd-spacing-4)
+    }
+    web-search {
+      margin: var(---ddd-spacing-4);
+      border: var(---ddd-border-sm);
+      border-radius: var(---ddd-radius-sm);
+    }
+    .serch-icon {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin:var(---ddd-spacing-4);
+      color: #808080;
+      font-size: 15px;
+    }
+
+
+
+  </style>
+</head>
+
+<body>
+  <div id="demo">
+   <search></search>
+  </div>
+  <script type="module" src="./analyze.js"></script>
+</body>
+</html>
