@@ -1,5 +1,5 @@
 import { LitElement, html, css, AttributePart } from 'lit';
-import { DDDSuper } from "@haxthewen/d-d-d/d-d-d.js";
+import { DDDSuper } from "@haxtheweb/d-d-d/d-d-d.js";
 import "./search.js";
 
 class analyze extends DDDSuper(LitElement){
