@@ -7,39 +7,36 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
   <title>Site Analyzer</title>
   <style>
-    :root {
-      --global-hex-color: green;
-    }
-    html, body {
+    :root, html, body {
       margin: 0;
       padding: 0;
     }
+
     #demo {
-      margin: var(--ddd-spacing-4)
-    }
-    web-search {
-      margin: var(---ddd-spacing-4);
-      border: var(---ddd-border-sm);
-      border-radius: var(---ddd-radius-sm);
-    }
-    .serch-icon {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      margin:var(---ddd-spacing-4);
-      color: #808080;
-      font-size: 15px;
+      margin: var(--ddd-spacing-4);
     }
 
+    hax-search {
+      margin: var(--ddd-spacing-4);
+      border: var(--ddd-border-sm);
+      border-radius: var(--ddd-radius-md);
+    }
 
+    hax-search:hover {
+      box-shadow: var(--ddd-boxShadow-sm);
+    }
 
   </style>
+  <title>Searches</title>
 </head>
 
 <body>
   <div id="demo">
-   <search></search>
+    <h1>Search</h1>
+    <h2>default</h2>
+    <hax-search></hax-search>
   </div>
   <script type="module" src="./analyze.js"></script>
 </body>
+
 </html>

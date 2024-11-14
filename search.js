@@ -1,44 +1,79 @@
-import { LitElement, html, css, AttributePart } from 'lit';
+import { LitElement, html, css } from 'lit';
 import { DDDSuper } from "@haxtheweb/d-d-d/d-d-d.js";
-import "./search.js";
+import "./images.js";
 
-class analyze extends DDDSuper(LitElement){
-    contructor() {
-        super ();
-        this.value = '';
-        this.title = '';
-        this.loading = '';
-        this.items = [];
-        this.jsonUrl = 'https://haxtheweb.org/site.json';
+class Search extends LitElement {
+  static get properties() {
+    return {
+      url: { type: String },
+      isValid: { type: Boolean },
+    };
+  }
+ 
+  constructor() {
+    super();
+    this.url = '';
+    this.isValid = false;
+  }
+
+  _updateUrl(e) {
+    this.url = e.target.value.trim();
+    this.isValid = this.url.endsWith('site.json');
+    this.dispatchEvent(new CustomEvent('url-updated', { detail: { url: this.url } }));
+  }
+
+  render() {
+    return html`
+      <div class="search-container">
+        <input
+          type="text"
+          placeholder="Enter site URL"
+          @input="${this._updateUrl}"
+        />
+        <button 
+          @click="${() => this._analyze()}" 
+          ?disabled="${!this.isValid}">
+          Analyze
+        </button>
+      </div>
+    `;
+  }
+
+  _analyze() {
+    this.dispatchEvent(new CustomEvent('analyze-requested', { detail: { url: this.url } }));
+  }
+
+  static styles = css`
+    .search-container {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px;
+      border-radius: 4px;
+      background-color: #f5f5f5;
     }
-    static get properties() {
-        return {
-            title:{ type: String },
-            loading: { type: Boolean, reflect: true },
-            items: { type: Array },
-            value: { type: String },
-            jsonUrl: { type: String, attribute: 'json-url'}
-        }
+
+    input {
+      flex: 1;
+      padding: 8px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
     }
-    static get styles() {
-        return css`
-        :host {
-            display: block;
-        }
-        .search-continer{
-        display: flex;
-        background-color: #808080;
-        border-radius: 12px;
-        border: var(--ddd-border-lg) solid #808080;
-        padding: var(--ddd-spacing-2) var(--ddd-spacing-3);
-        width: 100%;
-        max-width: 600px;
-        margin: 15px auto;
+
+    button {
+      padding: 8px 16px;
+      background-color: #4CAF50;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
     }
-        
-        
-        
-        
-        `
+
+    button[disabled] {
+      background-color: #ccc;
+      cursor: not-allowed;
     }
+  `;
 }
+
+customElements.define('search', Search);

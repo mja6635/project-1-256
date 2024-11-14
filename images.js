@@ -4,7 +4,7 @@ import "./search.js";
 
 class analyze extends DDDSuper(LitElement){
   static get styles() {
-    return css`
+    return css`  
     :host {
       display: block
     }
