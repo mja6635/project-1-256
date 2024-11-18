@@ -1,128 +1,94 @@
 import { LitElement, html, css } from 'lit';
 import { DDDSuper } from "@haxtheweb/d-d-d/d-d-d.js";
-import "./search.js";
 
-class analyze extends DDDSuper(LitElement){
-  static get styles() {
-    return css`  
-    :host {
-      display: block
-    }
-    .search-continer{
-      display: flex;
-      background-color: #808080;
-      border-radius: 12px;
-      border: var(--ddd-border-lg) solid #808080;
-      padding: var(--ddd-spacing-2) var(--ddd-spacing-3);
-      width: 100%;
-      max-width: 600px;
-      margin: 15px auto;
-    }
-    .results {
-      visibility: visible;
-      height: 100%;
-    }
-    summary {
-      font-size: (---ddd-);
-      padding:(---ddd-);
-      color: gold;
-    }
-
-    input {
-      font-size: (---ddd-);
-      line-height: (---ddd-);
-      width: 100%;
-    }
-
-    .serch-icon {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      margin:var(---ddd-spacing-4);
-      color: #808080;
-      font-size: 15px;
-    }
-    `;
-  }
-
+export class Images extends DDDSuper(LitElement) {
   static get properties() {
     return {
-      url: {type: String},
-      isValid: {type: Boolean, reflect: true},
+      title: { type: String },
+      description: { type: String },
+      created: { type: String },
+      updated: { type: String },
+      slug: { type: String },
+      baseURL: { type: String },
+      logo: { type: String },
     };
   }
 
   constructor() {
     super();
-    this.url = null;
-    this.isValid = false;
+    this.title = '';
+    this.description = '';
+    this.created = '';
+    this.updated = '';
+    this.slug = '';
+    this.baseURL = '';
+    this.logo = ''; 
   }
 
-  updated(changeProperties) {
-    if(changeProperties.has('url')) {
-      if (this.url && this.url.endsWith('site.json')) {
-        this.isValid = true;
-
-      }
+  static get styles() {
+    return [super.styles, css`
+    .card {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      border: 2px solid;
+      margin: var(--ddd-spacing-2);
+      padding: var(--ddd-spacing-4);
+      background-color: var(--ddd-theme-default-forestGreen);
+      text-decoration: none;
+      box-shadow: var(--ddd-box-shadow-sm);
     }
+
+    .card-hover {
+      box-shadow: var(--ddd-box-shadow-md);
+      background-color: var(--ddd-theme-default-keystoneYellow);
+    }
+
+    img {
+      width: 240px;
+      height: auto;
+      margin-bottom: 8px;
+      border-radius: var(--ddd-radius-lg);
+    }
+
+    .title {
+      font-size: var(--ddd-font-size-m);
+      text-align: center;
+      margin: var(--ddd-spacing-4);
+    }
+
+    .description {
+      text-align: center;
+      font-size: var(--ddd-font-size-m);
+    }
+    `];
   }
 
   render() {
-    if (this.url == ''){this.url ='https://haxtheweb.org/site.json';}
-    else if (!this.url || !this.url.endsWith('site.json')) {this.url +='/site.json'}
-
     return html`
-      <div class="search-container">
-        <div class="search-icon"><button @click="${this._analyze}">analyze</button></div>
-        <input
-        class="search-input-"
-        type="text"
-        @input="${this._updateUrl}"
-        />
+      <a 
+        class="card"
+        tabindex="0"
+        href="${this.baseURL}/${this.slug}"        
+        target="_blank"
+      >
+        <img src="${this.logo ? this.baseURL + '/' + this.logo : 'https://via.placeholder.com/100'}" alt="${this.title}" />
+        <div class="title">${this.title}</div>
+        <div class="description">${this.description}</div>
+        ${this.created || this.updated ? html`
+          <div class="dates">
+            <p><strong>Created:</strong> ${this.created}</p>
+            <p><strong>Updated:</strong> ${this.updated}</p>
           </div>
-
-        `;
+        ` : ''}
+      </a>
+    `;
   }
 
-  async analyzeSite() {
-    if (!this.url || !this.url.endsWith('site.json')) {
-      this.errorMessage = 'Please enter a valid URL ending in site.json.';
-      return;
-    }
-
-    try {
-      const response = await fetch(this.url);
-      if (!response.ok) throw new Error('Failed to fetch site.json');
-
-      const data = await response.json();
-      if (!data.items || !data.metadata) throw new Error('Invalid site.json format');
-
-      this.siteDetails = {
-        name: data.metadata.name,
-        description: data.metadata.description,
-        logo: data.metadata.logo,
-        theme: data.metadata.theme,
-        created: data.metadata.created,
-        lastUpdated: data.metadata.lastUpdated,
-        hexCode: data.metadata.hexCode
-      };
-
-      this.items = data.items.map(item => ({
-        title: item.title,
-        description: item.description || 'No description available',
-        lastUpdated: item.lastUpdated,
-        image: item.image || 'placeholder.png',
-        link: item.link,
-        sourceLink: item.slug ? `${this.url.replace('/site.json', '')}/index.html` : ''
-      }));
-
-      this.errorMessage = '';
-    } catch (error) {
-      this.errorMessage = `Error: ${error.message}`;
-      this.siteDetails = null;
-      this.items = [];
-    }
+  static get tag() {
+    return 'these-images';
   }
 }
 
-customElements.define(analyze.tag, analyze);
+customElements.define(Images.tag, Images);

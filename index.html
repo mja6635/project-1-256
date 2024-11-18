@@ -6,6 +6,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
   <title>Site Analyzer</title>
+
   <style>
     :root, html, body {
       margin: 0;
@@ -14,29 +15,26 @@
 
     #demo {
       margin: var(--ddd-spacing-4);
+      text-align: center;
     }
 
-    hax-search {
+    web-search {
       margin: var(--ddd-spacing-4);
       border: var(--ddd-border-sm);
       border-radius: var(--ddd-radius-md);
     }
 
-    hax-search:hover {
+    web-search:hover {
       box-shadow: var(--ddd-boxShadow-sm);
     }
-
   </style>
-  <title>Searches</title>
 </head>
 
 <body>
   <div id="demo">
-    <h1>Search</h1>
-    <h2>default</h2>
-    <hax-search></hax-search>
+    <h1>Site Analyzer</h1>
+    <search></search>
   </div>
-  <script type="module" src="./analyze.js"></script>
+  <script type="module" src="./search.js"></script>
 </body>
-
 </html>
