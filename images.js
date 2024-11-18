@@ -35,32 +35,31 @@ export class Images extends DDDSuper(LitElement) {
       border: 2px solid;
       margin: var(--ddd-spacing-2);
       padding: var(--ddd-spacing-4);
-      background-color: var(--ddd-theme-default-forestGreen);
-      text-decoration: none;
-      box-shadow: var(--ddd-box-shadow-sm);
+      box-shadow: var(--ddd-box-shadow-md);
     }
 
     .card-hover {
       box-shadow: var(--ddd-box-shadow-md);
-      background-color: var(--ddd-theme-default-keystoneYellow);
     }
 
     img {
       width: 240px;
       height: auto;
       margin-bottom: 8px;
-      border-radius: var(--ddd-radius-lg);
+      border-radius: var(--ddd-radius-md);
     }
 
     .title {
-      font-size: var(--ddd-font-size-m);
+      font-size: var(--ddd-font-size-s);
       text-align: center;
-      margin: var(--ddd-spacing-4);
+      margin: var(--ddd-spacing-2);
+      color: var(--ddd-theme-default-forestGreen);
     }
 
     .description {
       text-align: center;
-      font-size: var(--ddd-font-size-m);
+      font-size: var(--ddd-font-size-s);
+      color: var(--ddd-theme-default-nittanyNavy);
     }
     `];
   }
@@ -73,12 +72,11 @@ export class Images extends DDDSuper(LitElement) {
         href="${this.baseURL}/${this.slug}"        
         target="_blank"
       >
-        <img src="${this.logo ? this.baseURL + '/' + this.logo : 'https://via.placeholder.com/100'}" alt="${this.title}" />
-        <div class="title">${this.title}</div>
+      <img src="${this.logo.startsWith('http') ? this.logo : this.baseURL + '/' + this.logo}" alt="${this.title}" />
+
         <div class="description">${this.description}</div>
         ${this.created || this.updated ? html`
           <div class="dates">
-            <p><strong>Created:</strong> ${this.created}</p>
             <p><strong>Updated:</strong> ${this.updated}</p>
           </div>
         ` : ''}
